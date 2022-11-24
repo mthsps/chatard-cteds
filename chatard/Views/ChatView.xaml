@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="ChatView" Height="450" Width="800">
     <Grid>
-        
+        <Rectangle HorizontalAlignment="Left" Height="434" Stroke="Black" VerticalAlignment="Center" Width="145"/>
+        <Button Content="Send" HorizontalAlignment="Left" Height="54" Margin="713,349,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click"/>
+        <TextBox HorizontalAlignment="Left" Height="54" Margin="195,349,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="489" TextChanged="TextBox_TextChanged_2"/>
+        <Rectangle HorizontalAlignment="Left" Height="50" Margin="0,92,0,0" Stroke="Black" VerticalAlignment="Top" Width="145"/>
+        <Ellipse HorizontalAlignment="Left" Height="31" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="36"/>
+        <TextBlock HorizontalAlignment="Left" Margin="72,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="en-gb" Text="Allias Roe"/></TextBlock>
+        <TextBox HorizontalAlignment="Left" Margin="12,46,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <Ellipse HorizontalAlignment="Left" Height="30" Margin="10,102,0,0" Stroke="Black" VerticalAlignment="Top" Width="36"/>
+        <TextBox HorizontalAlignment="Left" Margin="60,108,0,0" TextWrapping="Wrap" Text="Friend 1" VerticalAlignment="Top" Width="72" Height="24" TextChanged="TextBox_TextChanged_1"/>
+
     </Grid>
 </Window>

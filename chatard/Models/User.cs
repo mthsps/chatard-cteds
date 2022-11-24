@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace chatard.Models
 {
-    internal class User
+    public class User
     {
     }
 }
