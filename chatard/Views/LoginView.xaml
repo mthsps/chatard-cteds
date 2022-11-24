@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:chatard.Views"
         mc:Ignorable="d"
-        Title="LoginView" Height="550" Width="800"
+        Title="LoginView" Height="550" Width="600"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -61,10 +61,10 @@
                         Click="Minimize_Click">
                     <Button.Style>
                         <Style TargetType="Button">
-                            <Setter Property="Background" Value="RoyalBlue"/>
+                            <Setter Property="Background" Value="Blue"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="Cyan"/>
+                                    <Setter Property="Background" Value="RoyalBlue"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -95,10 +95,10 @@
                         Click="Close_Click">
                     <Button.Style>
                         <Style TargetType="Button">
-                            <Setter Property="Background" Value="Tomato"/>
+                            <Setter Property="Background" Value="Red"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="Background" Value="Tomato"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -148,7 +148,7 @@
                          FontFamily="Monserrat"
                          Background="Transparent"
                          Foreground="Black"
-                         CaretBrush="LightGray"
+                         CaretBrush="RoyalBlue"
                          BorderBrush="Black"
                          BorderThickness="0,0,0,1"
                          Height="28"
@@ -164,13 +164,13 @@
                            FontFamily="Monserrat"
                            Margin="0,35,0,0">
                 </TextBlock>
-                <TextBox x:Name="txtPassword"
+                <PasswordBox x:Name="txtPassword"
                          FontSize="13"
                          FontWeight="Medium"
                          FontFamily="Monserrat"
                          Background="Transparent"
                          Foreground="Black"
-                         CaretBrush="LightGray"
+                         CaretBrush="RoyalBlue"
                          BorderBrush="Black"
                          BorderThickness="0,0,0,1"
                          Height="28"
@@ -178,9 +178,9 @@
                          Margin="0,5,0,0"
                          Padding="20,0,0,0">
 
-                </TextBox>
+                </PasswordBox>
 
-                <Button x:Name="Login"
+                <Button x:Name="LoginBtn"
                         BorderThickness="0"
                         Content="Log In"
                         Foreground="White"
@@ -189,13 +189,13 @@
                         Cursor="Hand"
                         Grid.Column="2"
                         Margin="0,50,0,0"
-                        Click="Close_Click">
+                        Click="LogIn_Click">
                     <Button.Style>
                         <Style TargetType="Button">
-                            <Setter Property="Background" Value="RoyalBlue"/>
+                            <Setter Property="Background" Value="DarkBlue"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="Background" Value="RoyalBlue"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -223,14 +223,14 @@
                         FontFamily="Monserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Margin="0,50,0,0"
-                        Click="Close_Click">
+                        Margin="0,30,0,0"
+                        Click="Register_Click">
                     <Button.Style>
                         <Style TargetType="Button">
-                            <Setter Property="Background" Value="Tomato"/>
+                            <Setter Property="Background" Value="Red"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="Violet"/>
+                                    <Setter Property="Background" Value="Tomato"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
