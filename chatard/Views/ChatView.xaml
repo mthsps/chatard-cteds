@@ -32,7 +32,7 @@
 
         <ListView ItemsSource="{Binding Users}"
                   Grid.Row="0"
-                  ItemContainerStyle="{StaticResource ContactView}" />
+                  ItemContainerStyle="{StaticResource ContactCardList}" />
 
 
         <Grid
