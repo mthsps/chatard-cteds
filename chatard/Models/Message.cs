@@ -9,13 +9,13 @@ namespace chatard.Models
 {
     public class Message
     {
-        public string content { get; set; }
+        public string Content { get; set; }
 
-        public DateTime sendTime { get; set; }
-
-        public User sender { get ; set; }
-
-        public User receiver { get ; set; }
+        public DateTime SendTime { get; set; }
+        
+        public User Sender { get ; set; }
+        
+        public User Receiver { get ; set; }
 
         public Message() { }
 

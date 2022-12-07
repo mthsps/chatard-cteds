@@ -21,7 +21,7 @@ namespace chatard.ViewModels
         {
             Users = new ObservableCollection<User>();
             Messages = new ObservableCollection<Message>();
-
+            
             for (int i = 0; i < 10; i++)
             {
                 Users.Add(new User() { 
@@ -29,7 +29,20 @@ namespace chatard.ViewModels
                     Password = "Password " + i,
                     Email = "Email " + i, 
                     ProfilePicture = "ProfilePicture " + i });
+
+                Messages.Add(new Message()
+                {
+                    Content = "Message Ipsem lptes  Message Ipsem lptes Message Ipsem " +
+                    "Message Ipsem lptes Message Ipsem lptes " + i,
+                    SendTime = DateTime.Now,
+                    Sender = Users[i]
+                });
             } 
+
+
+            
+            
+
         }
                         
 

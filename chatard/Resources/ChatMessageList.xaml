@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style TargetType="ListViewItem" x:Key="ChatMessageList">
+        <Setter Property="Template" x:Name="Contact">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <StackPanel
+                        Margin="10"
+                        Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" 
+                                     MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth}"
+                                     HorizontalAlignment="Right"
+                                    >
+                            <TextBlock Text="{Binding Sender }" FontSize="11" Foreground="#BEAFC2"/>
+                            <TextBlock Text="{Binding Content}" 
+                                       FontSize="14" 
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding SendTime}" 
+                                       FontSize="10" 
+                                       Opacity="10" 
+                                       HorizontalAlignment="Right" 
+                                       FontStyle="Italic"
+                                       Foreground="Gray"
+                                       />
+                        </StackPanel>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+</ResourceDictionary>

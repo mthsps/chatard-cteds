@@ -22,10 +22,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="125"/>
+            <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -55,9 +55,15 @@
                     Margin="10"
                     Content="Send"
                     />
-
-
-
         </Grid>
+
+        <ListView Grid.Column="1"
+                  Grid.Row="0"
+                  ItemsSource="{Binding Messages}"
+                  ItemContainerStyle="{StaticResource ChatMessageList}"
+                  />
+
+
+
     </Grid>
 </Window>
