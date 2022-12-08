@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:chatard.Views"
         mc:Ignorable="d"
-                Title="LoginView" Height="550" Width="600"
+        Title="LoginView" Height="550" Width="600"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -121,26 +121,18 @@
             <StackPanel Width="250"
                         Grid.Row="2"
                         Orientation="Vertical"
-                        Margin="0,35,0,0">
+                        Margin="0,15,0,0">
                 <TextBlock Text="Welcome to Chatard!"
                            FontSize="25"
                            FontWeight="Bold"
                            FontFamily="Monserrat"
                            HorizontalAlignment="Center">
                 </TextBlock>
-                <TextBlock Text="The best way to communicate online"
-                           FontSize="12"
-                           FontWeight="Medium"
-                           FontFamily="Monserrat"
-                           TextWrapping="Wrap"
-                           TextAlignment="Center"
-                           Margin="0,5,0,0">
-                </TextBlock>
                 <TextBlock Text="Username"
                            FontSize="12"
                            FontWeight="Medium"
                            FontFamily="Monserrat"
-                           Margin="0,35,0,0">
+                           Margin="0,25,0,0">
                 </TextBlock>
                 <TextBox x:Name="txtUsername"
                          FontSize="13"
@@ -232,7 +224,7 @@
                         FontFamily="Monserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Margin="0,30,0,0"
+                        Margin="0,20,0,0"
                         Click="Close_Click">
                     <Button.Style>
                         <Style TargetType="Button">
@@ -240,6 +232,39 @@
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="Tomato"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Height="40"
+                                    Width="150"
+                                    CornerRadius="20"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="GoBack"
+                        BorderThickness="0"
+                        Content="Go Back"
+                        Foreground="White"
+                        FontSize="16"
+                        FontFamily="Monserrat"
+                        Cursor="Hand"
+                        Grid.Column="2"
+                        Margin="0,20,0,0"
+                        Click="GoBack_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="DarkBlue"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="RoyalBlue"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

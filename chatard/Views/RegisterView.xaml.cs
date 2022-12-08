@@ -31,5 +31,13 @@ namespace chatard.Views
         {
             WindowState = WindowState.Minimized;
         }
+        private void GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            Login loginView = new Login();
+            //this will open your child window
+            loginView.Show();
+            //this will close parent window. windowOne in this case
+            this.Close();
+        }
     }
 }
