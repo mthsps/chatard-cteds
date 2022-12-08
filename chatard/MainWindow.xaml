@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:chatard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="462" Width="785">
+        Title="MainWindow" Height="462" Width="785"
+        
+        >
     <Grid>
 
     </Grid>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using chatard.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,12 @@ namespace chatard
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+
+        public Context context { get; set; }
+        public MainWindow(Context context)
         {
+            Console.WriteLine("Passei por aqui");
+            this.context = context;
             InitializeComponent();
         }
     }

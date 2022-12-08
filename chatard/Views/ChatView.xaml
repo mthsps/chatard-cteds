@@ -54,6 +54,7 @@
                     Height="50"
                     Margin="10"
                     Content="Send"
+                    Command="{Binding SendMessageCommand}"
                     />
         </Grid>
 

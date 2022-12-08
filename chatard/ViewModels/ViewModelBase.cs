@@ -1,4 +1,5 @@
-﻿using chatard.Models;
+﻿using chatard.DataAccess;
+using chatard.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,22 +29,21 @@ namespace chatard.ViewModels
                     Username = "User " + i, 
                     Password = "Password " + i,
                     Email = "Email " + i, 
-                    ProfilePicture = "ProfilePicture " + i });
+                    //ProfilePicture = "ProfilePicture " + i
+                 });
 
                 Messages.Add(new Message()
                 {
                     Content = "Message Ipsem lptes  Message Ipsem lptes Message Ipsem " +
                     "Message Ipsem lptes Message Ipsem lptes " + i,
                     SendTime = DateTime.Now,
-                    Sender = Users[i]
+                    Sender = Users[i].ToString()
                 });
             } 
 
-
-            
-            
-
         }
+
+        
                         
 
 

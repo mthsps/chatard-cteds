@@ -9,12 +9,14 @@ namespace chatard.Models
 {
     public class User
     {
+        public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        public string ProfilePicture { get; set; }
-        public ObservableCollection<User> Contacts { get; set; }
-        public ObservableCollection<Message> Messages { get; set; }
+
+        //public string ProfilePicture { get; set; }
+        //public ObservableCollection<User> Contacts { get; set; }
+        //public ObservableCollection<Message> Messages { get; set; }
 
     }
 
