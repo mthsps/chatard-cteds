@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO.Packaging;
 using System.Linq;
 using System.Text;
@@ -9,14 +11,18 @@ namespace chatard.Models
 {
     public class Message
     {
-
-        public int Id { get; set; }
-        public string Content { get; set; }
-
-        public DateTime SendTime { get; set; }
-        public String Sender { get ; set; }
+        [Key]
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public string Content { get; set; } = String.Empty;
         
-        public String Receiver { get ; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime SendTime { get; set; } = DateTime.Now;
+
+        public User Sender { get; set; } = new User();
+
+        public User Receiver { get; set; } = new User();
+
+
 
         public Message() { }
 

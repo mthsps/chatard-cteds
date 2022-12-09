@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,18 @@ namespace chatard.Models
 {
     public class User
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        [Key]
+        public Guid UserId { get; set; } = Guid.NewGuid();
+        public string Username { get; set; } = String.Empty;
+        public string Password { get; set; } = String.Empty;
+        public string Email { get; set; } = String.Empty;
+        public string ProfilePicture { get; set; } = String.Empty;
+        public virtual ICollection<UserContacts> Contacts { get; } = new List<UserContacts>();
 
-        //public string ProfilePicture { get; set; }
-        //public ObservableCollection<User> Contacts { get; set; }
-        //public ObservableCollection<Message> Messages { get; set; }
+        public User() {}
+}
 
-    }
+    
 
 
 }

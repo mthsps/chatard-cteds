@@ -22,12 +22,10 @@ namespace chatard
     public partial class MainWindow : Window
     {
 
-        public Context context { get; set; }
         public MainWindow(Context context)
         {
-            Console.WriteLine("Passei por aqui");
-            this.context = context;
             InitializeComponent();
         }
+
     }
 }

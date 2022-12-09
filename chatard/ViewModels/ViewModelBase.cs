@@ -1,13 +1,6 @@
 ﻿using chatard.DataAccess;
-using chatard.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace chatard.ViewModels
 {
@@ -15,37 +8,11 @@ namespace chatard.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<User> Users { get; set; }
-        public ObservableCollection<Message> Messages { get; set; }
-
+        public Context context = new Context();
         public ViewModelBase()
         {
-            Users = new ObservableCollection<User>();
-            Messages = new ObservableCollection<Message>();
-            
-            for (int i = 0; i < 10; i++)
-            {
-                Users.Add(new User() { 
-                    Username = "User " + i, 
-                    Password = "Password " + i,
-                    Email = "Email " + i, 
-                    //ProfilePicture = "ProfilePicture " + i
-                 });
-
-                Messages.Add(new Message()
-                {
-                    Content = "Message Ipsem lptes  Message Ipsem lptes Message Ipsem " +
-                    "Message Ipsem lptes Message Ipsem lptes " + i,
-                    SendTime = DateTime.Now,
-                    Sender = Users[i].ToString()
-                });
-            } 
 
         }
-
-        
-                        
-
 
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
