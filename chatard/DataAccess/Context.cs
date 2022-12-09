@@ -1,20 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using chatard.Models;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Configuration;
-
+using System.Data.Entity;
 
 namespace chatard.DataAccess
 {
     public class Context : DbContext
     {
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public Context() : base("name=ChatardDatabase") 
         {
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["ChatardDatabase"].ConnectionString);
+            Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>());
+        }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<UserContacts> UserContacts { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
         
-        public Context(DbContextOptions<Context> options) : base(options) { 
-        }
-
-
     }
+
+    
+    
 }

@@ -1,12 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace chatard.Models
 {
-    internal class Message
+    public class Message
     {
+        [Key]
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public string Content { get; set; } = String.Empty;
+        
+        [DataType(DataType.DateTime)]
+        public DateTime SendTime { get; set; } = DateTime.Now;
+
+        public User Sender { get; set; } = new User();
+
+        public User Receiver { get; set; } = new User();
+
+
+
+        public Message() { }
+
     }
 }
