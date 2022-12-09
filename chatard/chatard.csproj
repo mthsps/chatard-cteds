@@ -12,5 +12,4 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
-
 </Project>

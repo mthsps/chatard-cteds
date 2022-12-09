@@ -10,6 +10,7 @@ namespace chatard.Models
 {
     public class User
     {
+
         [Key]
         public Guid UserId { get; set; } = Guid.NewGuid();
         public string Username { get; set; } = String.Empty;
@@ -19,10 +20,7 @@ namespace chatard.Models
         public virtual ICollection<UserContacts> Contacts { get; } = new List<UserContacts>();
 
         public User() {}
-}
-
-    
-
+    }
 
 }
 
