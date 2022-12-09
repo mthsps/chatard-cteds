@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using chatard.DataAccess;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace chatard.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Context context = new Context();
+        public ViewModelBase()
+        {
+
+        }
 
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
