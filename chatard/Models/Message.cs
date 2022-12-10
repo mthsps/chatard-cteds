@@ -13,16 +13,17 @@ namespace chatard.Models
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
+
+        [Required]
         public string Content { get; set; } = String.Empty;
-        
+
+        [Required]
         [DataType(DataType.DateTime)]
         public DateTime SendTime { get; set; } = DateTime.Now;
 
         public User Sender { get; set; } = new User();
 
         public User Receiver { get; set; } = new User();
-
-
 
         public Message() { }
 

@@ -13,10 +13,18 @@ namespace chatard.Models
 
         [Key]
         public Guid UserId { get; set; } = Guid.NewGuid();
+
+        [Required]
         public string Username { get; set; } = String.Empty;
+
+        [Required]
         public string Password { get; set; } = String.Empty;
+        
+        [Required]
         public string Email { get; set; } = String.Empty;
-        public string ProfilePicture { get; set; } = String.Empty;
+        
+        public string? ProfilePicture { get; set; } = null;
+        
         public virtual ICollection<UserContacts> Contacts { get; } = new List<UserContacts>();
 
         public User() {}

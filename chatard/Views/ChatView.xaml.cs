@@ -48,9 +48,14 @@ namespace chatard.Views
 
             User user = new User();
             user.Username = "Alas";
-
+            user.Email = "email@com.eu";
+            user.Password = "pass";
+            
             User user2 = new User();
-            user2.Username = "Alas2";
+           
+            user2.Username = "Homer";
+            user2.Email = "hemail@com.eu";
+            user2.Password = "pass";
 
             UserContacts userContacts = new UserContacts();
 
