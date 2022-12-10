@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace chatard.ViewModels
 {
@@ -22,6 +23,7 @@ namespace chatard.ViewModels
             set
             {
                 _username = value;
+                NotifyPropertyChanged(nameof(Username));
             }
         }
         public string Password 
@@ -33,6 +35,7 @@ namespace chatard.ViewModels
             set
             {
                 _password = value;
+                NotifyPropertyChanged(nameof(Password));
             } 
         }
         public string Error 
@@ -44,6 +47,7 @@ namespace chatard.ViewModels
             set
             {
                 _error = value;
+                NotifyPropertyChanged(nameof(Error));
             } 
         }
         public bool IsVisible {
@@ -54,8 +58,33 @@ namespace chatard.ViewModels
             set
             {
                 _isVisible = value;
-                OnPropertyChanged(nameof(IsVisible));
+                NotifyPropertyChanged(nameof(IsVisible));
             }
+        }
+
+        public ICommand LoginCommand { get; }
+        public ICommand ShowPasswordCommand { get; }
+        public ICommand RememberPasswordCommand { get; }
+        public ICommand RecoverPasswordCommand { get; }
+
+        public LoginViewModel()
+        {
+            LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
+        }
+
+        private void ExecuteLoginCommand(object obj)
+        {
+
+        }
+            
+        private bool CanExecuteLoginCommand(object obj)
+        {
+            bool isValid;
+            if (string.IsNullOrWhiteSpace(Username) || Password == null)
+                isValid = false;
+            else 
+                isValid = true;
+            return isValid;
         }
     }
 }

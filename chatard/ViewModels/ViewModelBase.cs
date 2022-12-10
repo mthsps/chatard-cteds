@@ -8,11 +8,6 @@ namespace chatard.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged(string propertyName)
-        {
-
-        }
-
         public Context context = new Context();
         public ViewModelBase()
         {
