@@ -183,7 +183,7 @@
                                                     Margin="0,5,0,0">
                 </customcontrols:BindablePasswordBox>
 
-                <TextBlock Text="{Binding ErrorMessage}"
+                <TextBlock Text="{Binding Error}"
                            Foreground="Tomato"
                            FontSize="12"
                            FontWeight="Medium"

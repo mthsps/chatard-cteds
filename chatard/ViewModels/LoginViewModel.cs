@@ -1,7 +1,10 @@
-﻿using System;
+﻿using chatard.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -74,7 +77,21 @@ namespace chatard.ViewModels
 
         private void ExecuteLoginCommand(object obj)
         {
-
+            bool isValidUser = false;
+            foreach(var user in context.Users)
+            {
+                if(user.Username == _username && user.Password == _password)
+                    isValidUser = true;
+            }
+            if(isValidUser)
+            {
+                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
+                IsVisible = false;
+            }
+            else
+            {
+                Error = "* Invalid username or password";
+            }
         }
             
         private bool CanExecuteLoginCommand(object obj)
