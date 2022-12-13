@@ -21,8 +21,6 @@ namespace chatard.Views
     /// </summary>
     public partial class ChatView : Window
     {
-
-        Context context = new Context();
         public ChatView()
         {
             InitializeComponent();

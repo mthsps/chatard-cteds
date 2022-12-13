@@ -1,7 +1,9 @@
 ﻿using chatard.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading;
 using System.Windows.Input;
@@ -11,45 +13,48 @@ namespace chatard.ViewModels
 {
     public class ChatViewModel : ViewModelBase
     {
-
+        
         public User LoggedUser;
-        private List<User> _contacts;
-        private List<Message> _messagesWithSelectedContact;
+        private ObservableCollection<User> _contacts;
+        private ObservableCollection<Message> _messagesWithSelectedContact;
         private User _selectedContact;
+        private string _messageToSend;
 
+        
         public ChatViewModel()
         {
 
             LoggedUser = context.Users
-                .Where(u => u.Username == Thread.CurrentPrincipal.Identity.Name)
+                .Where(u => u.Username == "Homer")
                 .FirstOrDefault();
+                
 
             var userContacts = context.UserContacts
-                 .Where(b => b.Contact.UserId == LoggedUser.UserId || b.User.UserId == LoggedUser.UserId)
                  .ToList();
 
             _contacts = ConvertContactsToUsers(userContacts);
 
+            _messagesWithSelectedContact = new ObservableCollection<Message>();
+
+            //_selectedContact = _contact
+
         }
 
-        private List<User> ConvertContactsToUsers(List<UserContacts> userContacts)
+        private ObservableCollection<User> ConvertContactsToUsers(List<UserContacts> userContacts)
         {
-            List<User> contacts = new List<User>();
+            ObservableCollection<User> contacts = new ObservableCollection<User>();
             foreach (UserContacts contact in userContacts)
             {
-                if (contact.User == null && contact.Contact.UserId != LoggedUser.UserId)
+                if (contact.Contact != null)
                 {
                     contacts.Add(contact.Contact);
-                }
-                else if (contact.Contact == null && contact.User.UserId != LoggedUser.UserId)
-                {
-                    contacts.Add(contact.User);
                 }
             }
             return contacts;
         }
 
-        public List<User> Contacts
+        
+        public ObservableCollection<User> Contacts
         {
             get
             {
@@ -61,8 +66,9 @@ namespace chatard.ViewModels
                 NotifyPropertyChanged(nameof(Contacts));
             }
         }
+        
 
-        public List<Message> MessagesWithSelectedContact
+        public ObservableCollection<Message> MessagesWithSelectedContact
         {
             get
             {
@@ -85,52 +91,59 @@ namespace chatard.ViewModels
             {
                 _selectedContact = value;
                 NotifyPropertyChanged(nameof(SelectedContact));
+                GetMessagesWithSelectedContact();
             }
         }
 
-
-        public ICommand SendMessageCommand
+        public string MessageToSend
         {
             get
             {
-                return new ViewModelCommand(SendMessage);
+                return _messageToSend;
             }
-        }
-
-        public ICommand SelectContactCommand
-        {
-            get
+            set
             {
-                return new ViewModelCommand(SelectContact);
+                _messageToSend = value;
+                NotifyPropertyChanged(nameof(MessageToSend));
+                SendMessage();     
             }
         }
 
-        private void SelectContact(object obj)
+        private void GetMessagesWithSelectedContact()
         {
-            MessagesWithSelectedContact = context.Messages
-                .Where(m => m.Sender.UserId == LoggedUser.UserId && m.Receiver.UserId == SelectedContact.UserId ||
-                m.Sender.UserId == SelectedContact.UserId && m.Receiver.UserId == LoggedUser.UserId)
-                .ToList();
+
+            List<Message> messagesWithSelectedContact = context.Messages
+              .Where(m => m.Sender.UserId == LoggedUser.UserId && m.Receiver.UserId == SelectedContact.UserId ||
+              m.Sender.UserId == SelectedContact.UserId && m.Receiver.UserId == LoggedUser.UserId)
+              .ToList();
+
+            messagesWithSelectedContact.Count();
+
+            messagesWithSelectedContact.Sort((x, y) => DateTime.Compare(x.SendTime, y.SendTime));
+
+            MessagesWithSelectedContact = new ObservableCollection<Message>(messagesWithSelectedContact);
+
+
         }
 
-
-        private void SendMessage(object obj)
+        private void SendMessage()
         {
-            Message message = new Message();
-            message.Sender = LoggedUser;
-            message.Receiver = SelectedContact;
-            message.Content = obj.ToString();
+            Message message = new Message()
+            {
+                Id = Guid.NewGuid(),
+                Sender = LoggedUser,
+                Receiver = SelectedContact,
+                SendTime = DateTime.Now,
+               // Content = txtMessage.Text
+            };
+
             context.Messages.Add(message);
             context.SaveChanges();
+   
             MessagesWithSelectedContact.Add(message);
+
+            _messageToSend = string.Empty;
         }
-
-
-
-
-
-
-
 
 
 

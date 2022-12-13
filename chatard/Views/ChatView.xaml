@@ -3,11 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:chatard.Views"
         xmlns:viewModel="clr-namespace:chatard.ViewModels" 
-        xmlns:customcontrols="clr-namespace:chatard.CustomControls"
         mc:Ignorable="d"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:viewmodels="clr-namespace:chatard.ViewModels"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="12"
@@ -21,11 +18,6 @@
         <viewModel:ChatViewModel/>
     </Window.DataContext>
 
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    </Window.Resources>
-
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -37,10 +29,12 @@
         </Grid.ColumnDefinitions>
 
 
-        <ListView ItemsSource="{Binding Contacts, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding SelectedContact, UpdateSourceTrigger=PropertyChanged}"
-                  Grid.Row="0"
-                  ItemContainerStyle="{StaticResource ContactCardList}" />
+        <ListView
+            ItemsSource="{Binding Contacts, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding SelectedContact, UpdateSourceTrigger=PropertyChanged}"
+            Grid.Row="0"
+            ItemContainerStyle="{StaticResource ContactCardList}"
+                  />
 
 
         <Grid
@@ -52,7 +46,8 @@
             </Grid.ColumnDefinitions>
 
 
-            <TextBox Grid.Column="0"
+            <TextBox x:Name="txtMessage"
+                Grid.Column="0"
                      Height="80"
                      Margin="20"
              >
@@ -62,7 +57,7 @@
                     Height="50"
                     Margin="10"
                     Content="Send"
-                    Command="{Binding SendMessageCommand}"
+                    Command="{Binding MessageToSend, Mode=OneWay}"
                     />
         </Grid>
 
