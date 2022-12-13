@@ -47,6 +47,7 @@
 
 
             <TextBox x:Name="txtMessage"
+                     Text="{Binding MessageToSend, UpdateSourceTrigger=PropertyChanged}"
                 Grid.Column="0"
                      Height="80"
                      Margin="20"
@@ -57,7 +58,7 @@
                     Height="50"
                     Margin="10"
                     Content="Send"
-                    Command="{Binding MessageToSend, Mode=OneWay}"
+                    Command="{Binding SendMessageCommand}"
                     />
         </Grid>
 
