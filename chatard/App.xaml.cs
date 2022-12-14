@@ -28,15 +28,6 @@ namespace chatard
                     ChatView chatView = new ChatView();
                     chatView.Show();
                     loginView.Close();
-                    foreach (User user in chatView.context.Users)
-                    {
-                        if (user.Username == Thread.CurrentPrincipal.Identity.Name)
-                        {
-                            User currentUser = user;
-                            MessageBox.Show($"Welcome {user.Username}");
-                        }
-                        
-                    }
                 } 
             };
             
