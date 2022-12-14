@@ -22,7 +22,7 @@ namespace chatard.Views
     public partial class ChatView : Window
     {
 
-        Context context = new Context();
+        public Context context = new Context();
         public ChatView()
         {
             InitializeComponent();

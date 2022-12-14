@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:chatard.Views"
+        xmlns:viewModel="clr-namespace:chatard.ViewModels" xmlns:customcontrols="clr-namespace:chatard.CustomControls"
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="600"
         WindowStyle="None"
@@ -11,6 +12,18 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModel:LoginViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
 
     <Border CornerRadius="25"
             BorderThickness="3">
@@ -42,7 +55,7 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Chatard - Log In"
+                <TextBlock Text="Chatard - Register"
                            Foreground="Black"
                            FontSize="15"
                            FontFamily="Monserrat"
@@ -121,7 +134,7 @@
             <StackPanel Width="250"
                         Grid.Row="2"
                         Orientation="Vertical"
-                        Margin="0,15,0,0">
+                        Margin="0,10,0,0">
                 <TextBlock Text="Welcome to Chatard!"
                            FontSize="25"
                            FontWeight="Bold"
@@ -132,9 +145,10 @@
                            FontSize="12"
                            FontWeight="Medium"
                            FontFamily="Monserrat"
-                           Margin="0,25,0,0">
+                           Margin="0,10,0,0">
                 </TextBlock>
                 <TextBox x:Name="txtUsername"
+                         Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                          FontSize="13"
                          FontWeight="Medium"
                          FontFamily="Monserrat"
@@ -157,6 +171,7 @@
                            Margin="0,35,0,0">
                 </TextBlock>
                 <TextBox x:Name="txtEmail"
+                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
                          FontSize="13"
                          FontWeight="Medium"
                          FontFamily="Monserrat"
@@ -178,21 +193,11 @@
                            FontFamily="Monserrat"
                            Margin="0,35,0,0">
                 </TextBlock>
-                <PasswordBox x:Name="txtPassword"
-                         FontSize="13"
-                         FontWeight="Medium"
-                         FontFamily="Monserrat"
-                         Background="Transparent"
-                         Foreground="Black"
-                         CaretBrush="RoyalBlue"
-                         BorderBrush="Black"
-                         BorderThickness="0,0,0,1"
-                         Height="28"
-                         VerticalContentAlignment="Center"
-                         Margin="0,5,0,0"
-                         Padding="20,0,0,0">
+                <customcontrols:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    Height="28"
+                                                    Margin="0,5,0,0">
 
-                </PasswordBox>
+                </customcontrols:BindablePasswordBox>
 
                 <TextBlock Text="Confirm Password"
                            FontSize="12"
@@ -200,23 +205,30 @@
                            FontFamily="Monserrat"
                            Margin="0,35,0,0">
                 </TextBlock>
-                <PasswordBox x:Name="txtConfirmPassword"
-                         FontSize="13"
-                         FontWeight="Medium"
-                         FontFamily="Monserrat"
-                         Background="Transparent"
-                         Foreground="Black"
-                         CaretBrush="RoyalBlue"
-                         BorderBrush="Black"
-                         BorderThickness="0,0,0,1"
-                         Height="28"
-                         VerticalContentAlignment="Center"
-                         Margin="0,5,0,0"
-                         Padding="20,0,0,0">
+                <customcontrols:BindablePasswordBox Password="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    Height="28"
+                                                    Margin="0,5,0,0">
 
-                </PasswordBox>
+                </customcontrols:BindablePasswordBox>
+
+                <TextBlock Text="{Binding PasswordError}"
+                           Foreground="Blue"
+                           FontSize="12"
+                           FontWeight="Medium"
+                           FontFamily="Montserrat"                             
+                           Margin="0,10,0,0"
+                           TextWrapping="Wrap"/>
+
+                <TextBlock Text="{Binding EmailOrUsernameError}"
+                           Foreground="Blue"
+                           FontSize="12"
+                           FontWeight="Medium"
+                           FontFamily="Montserrat"                             
+                           Margin="0,10,0,0"
+                           TextWrapping="Wrap"/>
 
                 <Button x:Name="Register"
+                        Command="{Binding RegisterCommand}"
                         BorderThickness="0"
                         Content="Register"
                         Foreground="White"
@@ -224,8 +236,7 @@
                         FontFamily="Monserrat"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Margin="0,20,0,0"
-                        Click="Close_Click">
+                        Margin="0,5,0,0">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="Red"/>
