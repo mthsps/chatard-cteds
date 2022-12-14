@@ -19,7 +19,7 @@ namespace chatard.Models
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime SendTime { get; set; } = DateTime.Now;
+        public DateTime SendTime { get; set; } = DateTime.UtcNow;
 
         public User Sender { get; set; } = new User();
 
