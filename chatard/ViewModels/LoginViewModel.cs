@@ -77,17 +77,16 @@ namespace chatard.ViewModels
 
         private void ExecuteLoginCommand(object obj)
         {
-            bool isValidUser = false;
-            foreach(var user in context.Users)
-            {
-                if(user.Username == _username && user.Password == _password)
-                    isValidUser = true;
-            }
-            if(isValidUser)
-            {
+            bool isValid = false;
+
+            var user = context.Users.
+                Where(u => u.Username == _username && u.Password == _password).FirstOrDefault();
+
+            if (user != null) {
+                isValid = true;
                 Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
                 IsVisible = false;
-            }
+            } 
             else
             {
                 Error = "* Invalid username or password";
@@ -103,5 +102,6 @@ namespace chatard.ViewModels
                 isValid = true;
             return isValid;
         }
+
     }
 }
