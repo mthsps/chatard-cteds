@@ -27,20 +27,23 @@ namespace chatard.ViewModels
 
         public ChatViewModel()
         {
-            //SeedDatabase();
+
+            SeedDatabase();
 
             LoggedUser = context.Users
-                .Where(u => u.Username == "Homer")
+                .Where(u => u.Username == Thread.CurrentPrincipal.Identity.Name)
                 .FirstOrDefault();
 
 
-            List<UserContacts> userContacts = context.UserContacts.ToList();
+            List<UserContacts> userContacts = context.UserContacts.
+                Where(u => u.User.UserId == LoggedUser.UserId 
+                || u.Contact.UserId == LoggedUser.UserId 
+                || u.UserId == LoggedUser.UserId || u.ContactId == LoggedUser.UserId)
+                .ToList();
 
             _contacts = ConvertContactsToUsers(userContacts);
 
             _messagesWithSelectedContact = new ObservableCollection<Message>();
-
-            //_selectedContact = _contact
 
             SendMessageCommand = new ViewModelCommand(ExecuteSendMessageCommand, CanExecuteSendMessageCommand);
 
@@ -60,6 +63,7 @@ namespace chatard.ViewModels
             MessagesWithSelectedContact.Add(message);
 
             GetMessagesWithSelectedContact();
+            MessageToSend = String.Empty;
         }
 
         private bool CanExecuteSendMessageCommand(object obj)
@@ -77,10 +81,15 @@ namespace chatard.ViewModels
             ObservableCollection<User> contacts = new ObservableCollection<User>();
             foreach (var contact in userContacts)
             {
-                if (contact.Contact != null)
+                if (contact.Contact != null && contact.Contact.UserId != LoggedUser.UserId)
                 {
                     contacts.Add(contact.Contact);
                 }
+                else if (contact.User != null && contact.User.UserId != LoggedUser.UserId)
+                {
+                    contacts.Add(contact.User);
+                }
+
             }
             return contacts;
         }
@@ -170,25 +179,6 @@ namespace chatard.ViewModels
 
 
         }
-
-        /*private void SendMessage()
-        {
-            Message message = new Message()
-            {
-                Id = Guid.NewGuid(),
-                Sender = LoggedUser,
-                Receiver = SelectedContact,
-                SendTime = DateTime.Now,
-                //Content = txtMessage.Text
-            };
-
-            context.Messages.Add(message);
-            context.SaveChanges();
-   
-            MessagesWithSelectedContact.Add(message);
-
-            _messageToSend = string.Empty;
-        }*/
 
 
         private void SeedDatabase()
