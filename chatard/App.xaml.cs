@@ -17,19 +17,6 @@ namespace chatard
             
             Login loginView = new Login();
             loginView.Show();
-            loginView.IsVisibleChanged += (s, ev) =>
-            {
-                /*if (loginView.IsVisible == false && loginView.Register ==)
-                {
-                    RegisterView registerview = new RegisterView();
-                }*/
-                if (loginView.IsVisible == false && loginView.IsLoaded)
-                {
-                    ChatView chatView = new ChatView();
-                    chatView.Show();
-                    loginView.Close();
-                } 
-            };
             
         }
     }

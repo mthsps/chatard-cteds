@@ -33,10 +33,6 @@ namespace chatard.Views
         {
             WindowState = WindowState.Minimized;
         }
-        private void LogIn_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
         private void Register_Click(object sender, RoutedEventArgs e)
         {
             RegisterView registerView = new RegisterView();

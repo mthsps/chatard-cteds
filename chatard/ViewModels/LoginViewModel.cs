@@ -1,4 +1,5 @@
 ﻿using chatard.Models;
+using chatard.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,8 @@ namespace chatard.ViewModels
                 isValid = true;
                 Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
                 IsVisible = false;
+                ChatView chatView = new ChatView();
+                chatView.Show();
             } 
             else
             {
@@ -99,6 +102,8 @@ namespace chatard.ViewModels
                 isValid = true;
             return isValid;
         }
+
+        
 
     }
 }

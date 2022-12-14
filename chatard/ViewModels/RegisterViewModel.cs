@@ -1,4 +1,5 @@
 ﻿using chatard.Models;
+using chatard.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,18 @@ namespace chatard.ViewModels
                 NotifyPropertyChanged(nameof(Username));
             }
         }
+        public string Email
+        {
+            get
+            {
+                return _email;
+            }
+            set
+            {
+                _email = value;
+                NotifyPropertyChanged(nameof(Email));
+            }
+        }
         public string Password
         {
             get
@@ -56,18 +69,7 @@ namespace chatard.ViewModels
                 NotifyPropertyChanged(nameof(ConfirmPassword));
             }
         }
-        public string Email
-        {
-            get
-            {
-                return _email;
-            }
-            set
-            {
-                _email = value;
-                NotifyPropertyChanged(nameof(Email));
-            }
-        }
+        
         public string PasswordError
         {
             get
@@ -120,7 +122,7 @@ namespace chatard.ViewModels
                 if (user.Username == _username && user.Email == _email)
                 {
                     isValidUser = false;
-                    EmailOrUsernameError = "* Username or email profile already exists";
+                    EmailOrUsernameError = "* This profile already exists";
                 }
             }
             if(_password != _confirmpassword)
@@ -132,9 +134,12 @@ namespace chatard.ViewModels
                 user.Username = Username;
                 user.Email = Email;
                 user.Password = Password;
+                user.ProfilePicture = "https://avatars.dicebear.com/api/pixel-art/gaia.svg?size=150";
                 context.Users.Add(user);
                 context.SaveChanges();
                 IsVisible = false;
+                Login login = new Login();
+                login.Show();
             }
         }
 

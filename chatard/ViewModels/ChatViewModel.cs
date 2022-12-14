@@ -1,4 +1,5 @@
 ﻿using chatard.Models;
+using chatard.Views;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
@@ -151,6 +152,8 @@ namespace chatard.ViewModels
             LoggedUser = null;
             Thread.CurrentPrincipal = null;
             IsVisible = false;
+            Login login = new Login();
+            login.Show();
         }
 
 
