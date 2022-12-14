@@ -7,6 +7,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
 using static System.Net.WebRequestMethods;
 
@@ -122,17 +123,19 @@ namespace chatard.ViewModels
                 userContact.Contact = user;
                 context.UserContacts.Add(userContact);
                 context.SaveChanges();
+                ContactToAdd = string.Empty;
+                MessageBox.Show("Contact added with success");
             }
             else
             {
-                AddContact = string.Empty;
+                MessageBox.Show("Contact not found! Try again...");
             }
         }
 
         private bool CanExecuteAddCommand(object obj)
         {
             bool isValid;
-            if (string.IsNullOrWhiteSpace(AddContact))
+            if (string.IsNullOrWhiteSpace(ContactToAdd))
                 isValid = false;
             else
                 isValid = true;
@@ -143,6 +146,7 @@ namespace chatard.ViewModels
         {
             return true;
         }
+        
         public ObservableCollection<User> Contacts
         {
             get
@@ -211,7 +215,7 @@ namespace chatard.ViewModels
             }
         }
 
-        public string AddContact
+        public string ContactToAdd
         {
             get
             {
@@ -220,7 +224,7 @@ namespace chatard.ViewModels
             set
             {
                 _addContact = value;
-                NotifyPropertyChanged(nameof(AddContact));
+                NotifyPropertyChanged(nameof(ContactToAdd));
             }
         }
 
