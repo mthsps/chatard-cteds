@@ -23,6 +23,7 @@ namespace chatard.ViewModels
         private bool _isVisible;
 
         public ICommand SendMessageCommand { get; }
+        public ICommand LogoffCommand { get; }
 
 
         public ChatViewModel()
@@ -44,6 +45,7 @@ namespace chatard.ViewModels
             _messagesWithSelectedContact = new ObservableCollection<Message>();
 
             SendMessageCommand = new ViewModelCommand(ExecuteSendMessageCommand, CanExecuteSendMessageCommand);
+            LogoffCommand = new ViewModelCommand(ExecuteLogoffCommand, CanExecuteLogoffCommand);
 
         }
 
@@ -92,7 +94,17 @@ namespace chatard.ViewModels
             return contacts;
         }
 
-        
+        private void ExecuteLogoffCommand(object obj)
+        {
+            LoggedUser = null;
+            Thread.CurrentPrincipal = null;
+            IsVisible = false;
+        }
+
+        private bool CanExecuteLogoffCommand(object obj)
+        {
+            return true;
+        }
         public ObservableCollection<User> Contacts
         {
             get
