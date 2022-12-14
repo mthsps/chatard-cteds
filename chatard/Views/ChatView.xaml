@@ -63,7 +63,7 @@
                 </Ellipse.Fill>
             </Ellipse>
 
-            <Label Content="{Binding LoggedUser.Username}"
+            <Label Content="{Binding AddContact}"
                        Foreground="White"
                        FontWeight="Bold"
                        Margin="-60,52,0,0"/>

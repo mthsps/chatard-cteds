@@ -27,7 +27,7 @@ namespace chatard.ViewModels
         public ICommand LogoffCommand { get; }
         public ICommand AddCommand { get; }
 
-
+        
         public ChatViewModel()
         {
 
@@ -36,11 +36,8 @@ namespace chatard.ViewModels
                 .FirstOrDefault();
 
 
-            List<UserContacts> userContacts = context.UserContacts.
-                Where(u => u.User.UserId == LoggedUser.UserId 
-                || u.Contact.UserId == LoggedUser.UserId 
-                || u.UserId == LoggedUser.UserId || u.ContactId == LoggedUser.UserId)
-                .ToList();
+            List<UserContacts> userContacts = GetUserContacts();
+            
 
             _contacts = ConvertContactsToUsers(userContacts);
 
@@ -122,6 +119,7 @@ namespace chatard.ViewModels
                 userContact.Contact = user;
                 context.UserContacts.Add(userContact);
                 context.SaveChanges();
+                ConvertContactsToUsers(GetUserContacts());
             }
             else
             {
@@ -237,6 +235,15 @@ namespace chatard.ViewModels
 
             MessagesWithSelectedContact = new ObservableCollection<Message>(messagesWithSelectedContact);
 
+
+        }
+        private List<UserContacts> GetUserContacts()
+        {
+            return context.UserContacts.
+            Where(u => u.User.UserId == LoggedUser.UserId
+            || u.Contact.UserId == LoggedUser.UserId
+            || u.UserId == LoggedUser.UserId || u.ContactId == LoggedUser.UserId)
+            .ToList();
 
         }
 
