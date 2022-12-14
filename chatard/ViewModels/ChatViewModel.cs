@@ -17,25 +17,28 @@ namespace chatard.ViewModels
 {
     public class ChatViewModel : ViewModelBase
     {
-
-        public User LoggedUser;
+       
+        public User LoggedUser { get; set; }
         private ObservableCollection<User> _contacts;
         private ObservableCollection<Message> _messagesWithSelectedContact;
         private User _selectedContact;
         private string _messageToSend;
+        private string _addContact;
         private bool _isVisible;
 
         public ICommand SendMessageCommand { get; }
+        public ICommand LogoffCommand { get; }
+        public ICommand AddCommand { get; }
 
         HubConnection connection;
-
-
+        
         public ChatViewModel()
         {
 
             LoggedUser = context.Users
                 .Where(u => u.Username == Thread.CurrentPrincipal.Identity.Name)
                 .FirstOrDefault();
+
 
 
             //SignalR Server
@@ -54,17 +57,17 @@ namespace chatard.ViewModels
 
             connection.StartAsync();
 
-            List<UserContacts> userContacts = context.UserContacts.
-                Where(u => u.User.UserId == LoggedUser.UserId
-                || u.Contact.UserId == LoggedUser.UserId
-                || u.UserId == LoggedUser.UserId || u.ContactId == LoggedUser.UserId)
-                .ToList();
+
+            List<UserContacts> userContacts = GetUserContacts();
+            
 
             _contacts = ConvertContactsToUsers(userContacts);
 
             _messagesWithSelectedContact = new ObservableCollection<Message>();
 
             SendMessageCommand = new ViewModelCommand(ExecuteSendMessageCommand, CanExecuteSendMessageCommand);
+            LogoffCommand = new ViewModelCommand(ExecuteLogoffCommand, CanExecuteLogoffCommand);
+            AddCommand = new ViewModelCommand(ExecuteAddCommand, CanExecuteAddCommand);
 
         }
 
@@ -143,6 +146,56 @@ namespace chatard.ViewModels
             return contacts;
         }
 
+        private void ExecuteLogoffCommand(object obj)
+        {
+            LoggedUser = null;
+            Thread.CurrentPrincipal = null;
+            IsVisible = false;
+        }
+
+
+        private void ExecuteAddCommand(object obj)
+        {
+            bool isValid = false;
+
+            var user = context.Users.
+                Where(u => u.Email == _addContact).FirstOrDefault();
+
+            if (user != null)
+            {
+                isValid = true;
+                UserContacts userContact = new UserContacts();
+                userContact.UserId = LoggedUser.UserId;
+                userContact.ContactId = user.UserId;
+                userContact.User = LoggedUser;
+                userContact.Contact = user;
+                context.UserContacts.Add(userContact);
+                context.SaveChanges();
+                ContactToAdd = string.Empty;
+                MessageBox.Show("Contact added with success");
+                _contacts = ConvertContactsToUsers(GetUserContacts());
+            }
+            else
+            {
+                MessageBox.Show("Contact not found! Try again...");
+            }
+        }
+
+        private bool CanExecuteAddCommand(object obj)
+        {
+            bool isValid;
+            if (string.IsNullOrWhiteSpace(ContactToAdd))
+                isValid = false;
+            else
+                isValid = true;
+            return isValid;
+        }
+
+        private bool CanExecuteLogoffCommand(object obj)
+        {
+            return true;
+        }
+        
 
         public ObservableCollection<User> Contacts
         {
@@ -211,6 +264,19 @@ namespace chatard.ViewModels
             }
         }
 
+        public string ContactToAdd
+        {
+            get
+            {
+                return _addContact;
+            }
+            set
+            {
+                _addContact = value;
+                NotifyPropertyChanged(nameof(ContactToAdd));
+            }
+        }
+
         private void GetMessagesWithSelectedContact()
         {
 
@@ -223,6 +289,15 @@ namespace chatard.ViewModels
             messagesWithSelectedContact.Sort((x, y) => DateTime.Compare(x.SendTime, y.SendTime));
 
             MessagesWithSelectedContact = new ObservableCollection<Message>(messagesWithSelectedContact);
+
+        }
+        private List<UserContacts> GetUserContacts()
+        {
+            return context.UserContacts.
+            Where(u => u.User.UserId == LoggedUser.UserId
+            || u.Contact.UserId == LoggedUser.UserId
+            || u.UserId == LoggedUser.UserId || u.ContactId == LoggedUser.UserId)
+            .ToList();
 
         }
 
