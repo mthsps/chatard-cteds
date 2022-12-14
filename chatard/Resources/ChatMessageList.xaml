@@ -12,7 +12,7 @@
                                      MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=ActualWidth}"
                                      HorizontalAlignment="Right"
                                     >
-                            <TextBlock Text="{Binding Sender }" FontSize="11" Foreground="#BEAFC2"/>
+                            <TextBlock Text="{Binding Sender.Username}" FontSize="11" Foreground="#BEAFC2"/>
                             <TextBlock Text="{Binding Content}" 
                                        FontSize="14" 
                                        TextWrapping="Wrap"/>
