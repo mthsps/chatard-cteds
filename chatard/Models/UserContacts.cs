@@ -10,9 +10,12 @@ namespace chatard.Models
 {
     public class UserContacts
     {
-        [Key]
+
         public int Id { get; set; }
-        public User User { get; set; }
-        public User Contact { get; set; }
+        public Guid ContactId { get; set; }
+        public Guid UserId { get; set; }
+
+        public virtual User User { get; set; }
+        public virtual User Contact { get; set; }
     }
 }

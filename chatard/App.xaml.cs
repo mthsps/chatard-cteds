@@ -14,6 +14,7 @@ namespace chatard
     {
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
+            
             Login loginView = new Login();
             loginView.Show();
             loginView.IsVisibleChanged += (s, ev) =>
@@ -38,6 +39,7 @@ namespace chatard
                     }
                 } 
             };
+            
         }
     }
 
