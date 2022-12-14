@@ -20,10 +20,12 @@ namespace chatard.ViewModels
         private ObservableCollection<Message> _messagesWithSelectedContact;
         private User _selectedContact;
         private string _messageToSend;
+        private string _addContact;
         private bool _isVisible;
 
         public ICommand SendMessageCommand { get; }
         public ICommand LogoffCommand { get; }
+        public ICommand AddCommand { get; }
 
 
         public ChatViewModel()
@@ -46,6 +48,7 @@ namespace chatard.ViewModels
 
             SendMessageCommand = new ViewModelCommand(ExecuteSendMessageCommand, CanExecuteSendMessageCommand);
             LogoffCommand = new ViewModelCommand(ExecuteLogoffCommand, CanExecuteLogoffCommand);
+            AddCommand = new ViewModelCommand(ExecuteAddCommand, CanExecuteAddCommand);
 
         }
 
@@ -99,6 +102,41 @@ namespace chatard.ViewModels
             LoggedUser = null;
             Thread.CurrentPrincipal = null;
             IsVisible = false;
+        }
+
+
+        private void ExecuteAddCommand(object obj)
+        {
+            bool isValid = false;
+
+            var user = context.Users.
+                Where(u => u.Email == _addContact).FirstOrDefault();
+
+            if (user != null)
+            {
+                isValid = true;
+                UserContacts userContact = new UserContacts();
+                userContact.UserId = LoggedUser.UserId;
+                userContact.ContactId = user.UserId;
+                userContact.User = LoggedUser;
+                userContact.Contact = user;
+                context.UserContacts.Add(userContact);
+                context.SaveChanges();
+            }
+            else
+            {
+                AddContact = string.Empty;
+            }
+        }
+
+        private bool CanExecuteAddCommand(object obj)
+        {
+            bool isValid;
+            if (string.IsNullOrWhiteSpace(AddContact))
+                isValid = false;
+            else
+                isValid = true;
+            return isValid;
         }
 
         private bool CanExecuteLogoffCommand(object obj)
@@ -170,6 +208,19 @@ namespace chatard.ViewModels
             {
                 _isVisible = value;
                 NotifyPropertyChanged(nameof(IsVisible));
+            }
+        }
+
+        public string AddContact
+        {
+            get
+            {
+                return _addContact;
+            }
+            set
+            {
+                _addContact = value;
+                NotifyPropertyChanged(nameof(AddContact));
             }
         }
 

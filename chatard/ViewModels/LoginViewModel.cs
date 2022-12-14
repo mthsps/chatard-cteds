@@ -66,9 +66,6 @@ namespace chatard.ViewModels
         }
 
         public ICommand LoginCommand { get; }
-        //public ICommand ShowPasswordCommand { get; }
-        //public ICommand RememberPasswordCommand { get; }
-        //public ICommand RecoverPasswordCommand { get; }
 
         public LoginViewModel()
         {
