@@ -15,7 +15,7 @@ namespace chatard.ViewModels
     public class ChatViewModel : ViewModelBase
     {
         
-        public User LoggedUser;
+        public User LoggedUser { get; set; }
         private ObservableCollection<User> _contacts;
         private ObservableCollection<Message> _messagesWithSelectedContact;
         private User _selectedContact;

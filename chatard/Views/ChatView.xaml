@@ -42,12 +42,12 @@
             
             <Ellipse Width="30" Height="30" Margin="10,0,0,0">
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="{Binding LoggedUser.ProfilePicture}"/>
+                    <ImageBrush ImageSource="{Binding LoggedUser.ProfilePicture, Mode=OneWay}"/>
                 </Ellipse.Fill>
             </Ellipse>
 
             <StackPanel>
-                <Label Content="{Binding LoggedUser.Username}"
+                <Label Content="{Binding LoggedUser.Username, Mode=OneWay}"
                        Foreground="White"
                        FontWeight="Bold"
                        Margin="0,-8,0,-5"/>
