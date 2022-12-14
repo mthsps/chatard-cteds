@@ -1,20 +1,23 @@
 ﻿using chatard.Models;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
-using static System.Net.WebRequestMethods;
 
 namespace chatard.ViewModels
 {
     public class ChatViewModel : ViewModelBase
     {
-        
+
         public User LoggedUser;
         private ObservableCollection<User> _contacts;
         private ObservableCollection<Message> _messagesWithSelectedContact;
@@ -23,6 +26,8 @@ namespace chatard.ViewModels
         private bool _isVisible;
 
         public ICommand SendMessageCommand { get; }
+
+        HubConnection connection;
 
 
         public ChatViewModel()
@@ -33,9 +38,25 @@ namespace chatard.ViewModels
                 .FirstOrDefault();
 
 
+            //SignalR Server
+            connection = new HubConnectionBuilder()
+               .WithUrl("http://localhost:5134/ChatHub")
+               .Build();
+
+            
+            connection.On<string, string>("ReceiveMessage", (sender, receiver) =>
+            {
+                if (receiver == LoggedUser.Username)
+                {
+                    GetMessagesWithSelectedContact();
+                }
+            });
+
+            connection.StartAsync();
+
             List<UserContacts> userContacts = context.UserContacts.
-                Where(u => u.User.UserId == LoggedUser.UserId 
-                || u.Contact.UserId == LoggedUser.UserId 
+                Where(u => u.User.UserId == LoggedUser.UserId
+                || u.Contact.UserId == LoggedUser.UserId
                 || u.UserId == LoggedUser.UserId || u.ContactId == LoggedUser.UserId)
                 .ToList();
 
@@ -47,8 +68,12 @@ namespace chatard.ViewModels
 
         }
 
-        private void ExecuteSendMessageCommand(object obj)
+
+        
+
+        private async void ExecuteSendMessageCommand(object obj)
         {
+
             Message message = new Message();
             message.Content = MessageToSend;
             message.Sender = LoggedUser;
@@ -58,11 +83,37 @@ namespace chatard.ViewModels
 
             context.SaveChanges();
 
+            try
+            {
+                await connection.InvokeAsync("SendMessage",
+                    LoggedUser.Username, SelectedContact.Username);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                
+            }
+
+
             MessagesWithSelectedContact.Add(message);
 
             GetMessagesWithSelectedContact();
             MessageToSend = String.Empty;
         }
+
+
+        // Listens to the server for new messages and refreshes the messages list
+        public async void ListenForNewMessages()
+        {
+
+
+            await connection.StartAsync();
+        }
+
+        
+
+
+        
 
         private bool CanExecuteSendMessageCommand(object obj)
         {
@@ -92,7 +143,7 @@ namespace chatard.ViewModels
             return contacts;
         }
 
-        
+
         public ObservableCollection<User> Contacts
         {
             get
@@ -105,7 +156,7 @@ namespace chatard.ViewModels
                 NotifyPropertyChanged(nameof(Contacts));
             }
         }
-        
+
 
         public ObservableCollection<Message> MessagesWithSelectedContact
         {
@@ -144,7 +195,6 @@ namespace chatard.ViewModels
             {
                 _messageToSend = value;
                 NotifyPropertyChanged(nameof(MessageToSend));
-                //SendMessage();     
             }
         }
 
@@ -174,11 +224,10 @@ namespace chatard.ViewModels
 
             MessagesWithSelectedContact = new ObservableCollection<Message>(messagesWithSelectedContact);
 
-
         }
 
+
+        
     }
-
-
 
 }
