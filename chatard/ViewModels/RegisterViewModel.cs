@@ -134,7 +134,7 @@ namespace chatard.ViewModels
                 user.Username = Username;
                 user.Email = Email;
                 user.Password = Password;
-                user.ProfilePicture = "https://avatars.dicebear.com/api/pixel-art/gaia.svg?size=150";
+                user.ProfilePicture = "https://randomuser.me/api/portraits/lego/5.jpg";
                 context.Users.Add(user);
                 context.SaveChanges();
                 IsVisible = false;

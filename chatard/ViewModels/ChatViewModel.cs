@@ -176,7 +176,7 @@ namespace chatard.ViewModels
                 context.SaveChanges();
                 ContactToAdd = string.Empty;
                 MessageBox.Show("Contact added with success");
-                _contacts = ConvertContactsToUsers(GetUserContacts());
+                Contacts = ConvertContactsToUsers(GetUserContacts());
             }
             else
             {
