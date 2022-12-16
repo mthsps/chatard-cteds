@@ -28,7 +28,7 @@ namespace chatard.Models
         [Required]
         [StringLength(50)]
         [Index(nameof(Email), IsUnique = true)]
-        
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; } = String.Empty;
         
         public string? ProfilePicture { get; set; } = null;
