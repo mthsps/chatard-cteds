@@ -56,6 +56,16 @@ namespace chatard.ViewModels
                 }
             });
 
+
+            connection.On<string, string>("AddNewContact", (sender, receiver) =>
+            {
+                if (receiver == LoggedUser.Username)
+                {
+                    Contacts = ConvertContactsToUsers(GetUserContacts());
+
+                }
+            });
+
             connection.StartAsync();
 
 
@@ -72,8 +82,6 @@ namespace chatard.ViewModels
 
         }
 
-
-        
 
         private async void ExecuteSendMessageCommand(object obj)
         {
@@ -104,20 +112,6 @@ namespace chatard.ViewModels
             GetMessagesWithSelectedContact();
             MessageToSend = String.Empty;
         }
-
-
-        // Listens to the server for new messages and refreshes the messages list
-        public async void ListenForNewMessages()
-        {
-
-
-            await connection.StartAsync();
-        }
-
-        
-
-
-        
 
         private bool CanExecuteSendMessageCommand(object obj)
         {
@@ -157,7 +151,7 @@ namespace chatard.ViewModels
         }
 
 
-        private void ExecuteAddCommand(object obj)
+        private async void ExecuteAddCommand(object obj)
         {
             bool isValid = false;
 
@@ -176,6 +170,10 @@ namespace chatard.ViewModels
                 context.SaveChanges();
                 ContactToAdd = string.Empty;
                 MessageBox.Show("Contact added with success");
+
+                await connection.InvokeAsync("AddNewContact",
+                    LoggedUser.Username, user.Username);
+
                 Contacts = ConvertContactsToUsers(GetUserContacts());
             }
             else
