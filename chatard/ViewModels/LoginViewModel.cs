@@ -1,4 +1,5 @@
 ﻿using chatard.Models;
+using chatard.Security;
 using chatard.Views;
 using System;
 using System.Collections.Generic;
@@ -77,8 +78,10 @@ namespace chatard.ViewModels
         {
             bool isValid = false;
 
+            string hashedPassword = Hash.GetHash(_password);
+
             var user = context.Users.
-                Where(u => u.Username == _username && u.Password == _password).FirstOrDefault();
+                Where(u => u.Username == _username && u.Password == hashedPassword).FirstOrDefault();
 
             if (user != null) {
                 isValid = true;

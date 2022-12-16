@@ -1,4 +1,5 @@
 ﻿using chatard.Models;
+using chatard.Security;
 using chatard.Views;
 using System;
 using System.Collections.Generic;
@@ -133,7 +134,7 @@ namespace chatard.ViewModels
                 User user = new User();
                 user.Username = Username;
                 user.Email = Email;
-                user.Password = Password;
+                user.Password = Hash.GetHash(Password);
                 user.ProfilePicture = "https://randomuser.me/api/portraits/lego/5.jpg";
                 context.Users.Add(user);
                 context.SaveChanges();
