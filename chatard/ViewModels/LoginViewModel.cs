@@ -76,15 +76,12 @@ namespace chatard.ViewModels
 
         private void ExecuteLoginCommand(object obj)
         {
-            bool isValid = false;
-
             string hashedPassword = Hash.GetHash(_password);
 
             var user = context.Users.
                 Where(u => u.Username == _username && u.Password == hashedPassword).FirstOrDefault();
 
             if (user != null) {
-                isValid = true;
                 Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
                 IsVisible = false;
                 ChatView chatView = new ChatView();
@@ -98,15 +95,13 @@ namespace chatard.ViewModels
             
         private bool CanExecuteLoginCommand(object obj)
         {
-            bool isValid;
+  
             if (string.IsNullOrWhiteSpace(Username) || Password == null)
-                isValid = false;
+                return false;
             else 
-                isValid = true;
-            return isValid;
+                return true;
         }
 
-        
 
     }
 }
